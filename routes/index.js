@@ -1,13 +1,13 @@
 import express from "express";
-
 //create the router
 const router = express.Router();
 
-//get request to the root route
+//All routes for the root route
 router.route("/")
     .get((req, res) => {
-        res.locals.title = "Mybrary";
+        res.locals.title = "Mybrary homepage";
         res.render("index");
     })
+
 
 export default router;
