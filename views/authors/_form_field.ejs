@@ -1,2 +1,14 @@
-<label>Enter your user name</label>
-<input type="text" name="name" value="<%= author.name%>">
+<div style="margin-bottom: 20px;">
+    <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Author Name</label>
+    <input type="text" 
+           name="name" 
+           value="<%= author.name || '' %>" 
+           placeholder="Enter author's full name (e.g., J.K. Rowling)"
+           required
+           style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box; transition: border-color 0.3s;"
+           onfocus="this.style.borderColor='#007bff'"
+           onblur="this.style.borderColor='#ddd'">
+    <small style="color: #6c757d; font-size: 14px; margin-top: 5px; display: block;">
+        💡 Enter the complete name as you want it to appear in the library
+    </small>
+</div>

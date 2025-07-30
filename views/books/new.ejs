@@ -1,8 +1,8 @@
-<div style="max-width: 600px; margin: 0 auto;">
+<div style="max-width: 800px; margin: 0 auto;">
     <!-- Page Header -->
     <div style="text-align: center; margin-bottom: 30px;">
-        <h2 style="color: #333; margin: 0 0 10px 0;">✍️ Add New Author</h2>
-        <p style="color: #6c757d; margin: 0;">Register a new author to your library system</p>
+        <h2 style="color: #333; margin: 0 0 10px 0;">📚 Add New Book</h2>
+        <p style="color: #6c757d; margin: 0;">Add a new book to your library collection</p>
     </div>
 
     <!-- Error Message -->
@@ -14,17 +14,17 @@
 
     <!-- Form Container -->
     <div style="background: white; border: 1px solid #e9ecef; border-radius: 10px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-        <form action="/authors" method="POST">
+        <form action="/books" method="POST" enctype="multipart/form-data">
             <!-- Include Form Fields -->
             <%- include('_form_field') %>
             
             <!-- Form Actions -->
             <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 25px; padding-top: 20px; border-top: 1px solid #e9ecef;">
-                <a href="/authors" style="padding: 12px 24px; background: #6c757d; color: white; text-decoration: none; border-radius: 6px; border: none; font-size: 14px; cursor: pointer; transition: background-color 0.3s;">
+                <a href="/books" style="padding: 12px 24px; background: #6c757d; color: white; text-decoration: none; border-radius: 6px; border: none; font-size: 14px; cursor: pointer; transition: background-color 0.3s;">
                     ❌ Cancel
                 </a>
                 <button type="submit" style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: bold; transition: background-color 0.3s;">
-                    ✅ Create Author
+                    ✅ Create Book
                 </button>
             </div>
         </form>
@@ -32,6 +32,6 @@
 
     <!-- Help Text -->
     <div style="text-align: center; margin-top: 20px; color: #6c757d; font-size: 14px;">
-        <p>💡 <strong>Tip:</strong> Make sure to enter the author's full name for better organization</p>
+        <p>💡 <strong>Tips:</strong> Upload a cover image for better visual appeal • Make sure all required fields are filled</p>
     </div>
 </div>

@@ -1,3 +1,136 @@
-<footer>
-    <p>Copyright &copy; 2025 Mybrary</p>
+<!-- Modern Footer -->
+<footer style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; margin-top: 50px; padding: 40px 0 20px 0; border-top: 1px solid #e9ecef;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        <!-- Footer Content Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 30px;">
+            
+            <!-- About Section -->
+            <div>
+                <h4 style="color: white; margin: 0 0 15px 0; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                    📚 <span>About Mybrary</span>
+                </h4>
+                <p style="color: rgba(255,255,255,0.8); margin: 0 0 15px 0; line-height: 1.5; font-size: 14px;">
+                    Your personal digital library management system. Organize, search, and manage your book collection with ease.
+                </p>
+                <div style="display: flex; gap: 10px;">
+                    <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                        📖 Books
+                    </span>
+                    <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                        👥 Authors
+                    </span>
+                    <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                        🔍 Search
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div>
+                <h4 style="color: white; margin: 0 0 15px 0; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                    🔗 <span>Quick Links</span>
+                </h4>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 8px;">
+                        <a href="/books" style="color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; transition: color 0.3s;"
+                           onmouseover="this.style.color='white'"
+                           onmouseout="this.style.color='rgba(255,255,255,0.8)'">
+                            📚 Browse All Books
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        <a href="/authors" style="color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; transition: color 0.3s;"
+                           onmouseover="this.style.color='white'"
+                           onmouseout="this.style.color='rgba(255,255,255,0.8)'">
+                            👥 View All Authors
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        <a href="/books/new" style="color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; transition: color 0.3s;"
+                           onmouseover="this.style.color='white'"
+                           onmouseout="this.style.color='rgba(255,255,255,0.8)'">
+                            ➕ Add New Book
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        <a href="/authors/new" style="color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; transition: color 0.3s;"
+                           onmouseover="this.style.color='white'"
+                           onmouseout="this.style.color='rgba(255,255,255,0.8)'">
+                            ✍️ Add New Author
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Statistics -->
+            <div>
+                <h4 style="color: white; margin: 0 0 15px 0; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                    📊 <span>Library Stats</span>
+                </h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 5px;" id="footer-books-count">-</div>
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.8);">Books</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 5px;" id="footer-authors-count">-</div>
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.8);">Authors</div>
+                    </div>
+                </div>
+                <small style="color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 10px; display: block; text-align: center;">
+                    📅 Built with ❤️ using Node.js & MongoDB
+                </small>
+            </div>
+        </div>
+        
+        <!-- Footer Bottom -->
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                <p style="margin: 0; color: rgba(255,255,255,0.7); font-size: 14px;">
+                    © 2025 Mybrary. Made with 💝 for book lovers everywhere.
+                </p>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <span style="color: rgba(255,255,255,0.6); font-size: 12px;">
+                        🚀 Version 1.0
+                    </span>
+                    <span style="color: rgba(255,255,255,0.6); font-size: 12px;">
+                        ⚡ Powered by Express.js
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
 </footer>
+
+<!-- Footer Statistics Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Placeholder for dynamic stats - would normally fetch from API
+    const booksCount = document.getElementById('footer-books-count');
+    const authorsCount = document.getElementById('footer-authors-count');
+    
+    if (booksCount) booksCount.textContent = '0';
+    if (authorsCount) authorsCount.textContent = '0';
+    
+    // Future: Fetch actual counts from server
+    // fetch('/api/stats').then(res => res.json()).then(data => {
+    //     booksCount.textContent = data.books || '0';
+    //     authorsCount.textContent = data.authors || '0';
+    // });
+});
+</script>
+
+<!-- Mobile Footer Responsiveness -->
+<style>
+@media (max-width: 768px) {
+    footer div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        text-align: center;
+    }
+    
+    footer div[style*="justify-content: space-between"] {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>

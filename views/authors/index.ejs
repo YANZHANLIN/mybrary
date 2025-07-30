@@ -1,12 +1,101 @@
-<h2>search authors</h2>
-<form action="/authors" method="GET">
-    <label>Search by name</label>
-    <input type="text" name="name" placeholder="Search by name" value="<%= searchOptions.name %>">
-    <button type="submit">Search</button>
-</form>
-<br>
-<% authors.forEach(author => { %>
-    <div>
-        <h3><%= author.name %></h3>
+<h2>👥 Authors Directory</h2>
+
+<!-- Search Form -->
+<div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+    <h3>🔍 Search Authors</h3>
+    <form action="/authors" method="GET">
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: end;">
+            <div>
+                <label>Search by name</label>
+                <input type="text" name="name" placeholder="Enter author name..." 
+                       value="<%= searchOptions.name || '' %>" 
+                       style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div>
+                <button type="submit" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Search
+                </button>
+                <a href="/authors" style="padding: 8px 16px; background: #6c757d; color: white; text-decoration: none; border-radius: 4px; margin-left: 5px;">
+                    Clear
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Add New Author Button -->
+<div style="margin-bottom: 20px;">
+    <a href="/authors/new" style="padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+        ➕ Add New Author
+    </a>
+</div>
+
+<!-- Authors Display -->
+<% if (authors.length > 0) { %>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+        <% authors.forEach(author => { %>
+            <div style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center;">
+                <!-- Author Avatar -->
+                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: bold;">
+                    <%= author.name.charAt(0).toUpperCase() %>
+                </div>
+                
+                <!-- Author Info -->
+                <h3 style="margin: 10px 0; color: #333; font-size: 1.2rem;"><%= author.name %></h3>
+                
+                <p style="margin: 5px 0; color: #666; font-size: 14px;">
+                    <strong>📚 Books:</strong> <span id="book-count-<%= author._id %>">Loading...</span>
+                </p>
+                
+                <p style="margin: 5px 0; color: #999; font-size: 12px;">
+                    <strong>📅 Added:</strong> <%= author.createdAt ? author.createdAt.toDateString() : 'N/A' %>
+                </p>
+                
+                <!-- Action Buttons -->
+                <div style="margin-top: 15px; display: flex; gap: 8px; justify-content: center;">
+                    <a href="/authors/<%= author._id %>/books" style="padding: 6px 12px; background: #007bff; color: white; text-decoration: none; border-radius: 3px; font-size: 12px;">
+                        📖 Books
+                    </a>
+                    <a href="/authors/<%= author._id %>/edit" style="padding: 6px 12px; background: #ffc107; color: black; text-decoration: none; border-radius: 3px; font-size: 12px;">
+                        ✏️ Edit
+                    </a>
+                    <a href="/authors/<%= author._id %>" style="padding: 6px 12px; background: #17a2b8; color: white; text-decoration: none; border-radius: 3px; font-size: 12px;">
+                        👁️ View
+                    </a>
+                </div>
+            </div>
+        <% }); %>
     </div>
-<% }); %>
+<% } else { %>
+    <!-- No Authors Message -->
+    <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 8px; color: #6c757d;">
+        <h3>👥 No Authors Found</h3>
+        <% if (searchOptions.name) { %>
+            <p>No authors match your search for "<%= searchOptions.name %>".</p>
+            <a href="/authors" style="padding: 8px 16px; background: #6c757d; color: white; text-decoration: none; border-radius: 4px; margin: 10px 5px;">
+                Clear Search
+            </a>
+        <% } else { %>
+            <p>No authors have been added yet.</p>
+        <% } %>
+        <a href="/authors/new" style="padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; margin-top: 10px; display: inline-block;">
+            Add the First Author
+        </a>
+    </div>
+<% } %>
+
+<!-- Authors Summary -->
+<div style="margin-top: 30px; text-align: center; color: #6c757d; border-top: 1px solid #eee; padding-top: 20px;">
+    <p>📊 Total Authors: <strong><%= authors.length %></strong></p>
+</div>
+
+<!-- JavaScript for Book Count -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set default book count to 0 for all authors
+    const bookCountElements = document.querySelectorAll('[id^="book-count-"]');
+    bookCountElements.forEach(element => {
+        element.textContent = '0';
+    });
+});
+</script>

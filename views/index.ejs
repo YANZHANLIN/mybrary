@@ -1,1 +1,121 @@
-Middle
+<!-- Welcome Hero Section -->
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; text-align: center; border-radius: 12px; margin-bottom: 40px;">
+    <h1 style="font-size: 3rem; margin: 0 0 20px 0; font-weight: bold;">📚 Welcome to Mybrary</h1>
+    <p style="font-size: 1.2rem; margin: 0 0 30px 0; opacity: 0.9;">Your personal digital library management system</p>
+    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+        <a href="/books" style="padding: 12px 24px; background: rgba(255,255,255,0.2); color: white; text-decoration: none; border-radius: 6px; font-weight: bold; border: 2px solid rgba(255,255,255,0.3); transition: all 0.3s;">
+            📖 Browse Books
+        </a>
+        <a href="/authors" style="padding: 12px 24px; background: rgba(255,255,255,0.2); color: white; text-decoration: none; border-radius: 6px; font-weight: bold; border: 2px solid rgba(255,255,255,0.3); transition: all 0.3s;">
+            👥 View Authors
+        </a>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px;">
+    <!-- Add New Book Card -->
+    <div style="background: white; border: 1px solid #e9ecef; border-radius: 10px; padding: 25px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s; cursor: pointer;" onclick="location.href='/books/new'">
+        <div style="font-size: 3rem; margin-bottom: 15px;">📚</div>
+        <h3 style="color: #28a745; margin: 0 0 10px 0;">Add New Book</h3>
+        <p style="color: #6c757d; margin: 0 0 15px 0;">Add a new book to your library with cover image</p>
+        <a href="/books/new" style="padding: 8px 16px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;">
+            ➕ Add Book
+        </a>
+    </div>
+    
+    <!-- Add New Author Card -->
+    <div style="background: white; border: 1px solid #e9ecef; border-radius: 10px; padding: 25px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s; cursor: pointer;" onclick="location.href='/authors/new'">
+        <div style="font-size: 3rem; margin-bottom: 15px;">✍️</div>
+        <h3 style="color: #007bff; margin: 0 0 10px 0;">Add New Author</h3>
+        <p style="color: #6c757d; margin: 0 0 15px 0;">Register a new author to the system</p>
+        <a href="/authors/new" style="padding: 8px 16px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;">
+            ➕ Add Author
+        </a>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div style="background: #f8f9fa; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+    <h2 style="text-align: center; color: #495057; margin: 0 0 30px 0;">🌟 Features</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div style="text-align: center; padding: 20px;">
+            <div style="font-size: 2rem; margin-bottom: 10px;">🔍</div>
+            <h4 style="color: #495057; margin: 0 0 8px 0;">Smart Search</h4>
+            <p style="color: #6c757d; margin: 0; font-size: 14px;">Find books by title, author, or description quickly</p>
+        </div>
+        <div style="text-align: center; padding: 20px;">
+            <div style="font-size: 2rem; margin-bottom: 10px;">📸</div>
+            <h4 style="color: #495057; margin: 0 0 8px 0;">Cover Images</h4>
+            <p style="color: #6c757d; margin: 0; font-size: 14px;">Upload and manage book cover images</p>
+        </div>
+        <div style="text-align: center; padding: 20px;">
+            <div style="font-size: 2rem; margin-bottom: 10px;">📊</div>
+            <h4 style="color: #495057; margin: 0 0 8px 0;">Organization</h4>
+            <p style="color: #6c757d; margin: 0; font-size: 14px;">Organize books by authors and categories</p>
+        </div>
+        <div style="text-align: center; padding: 20px;">
+            <div style="font-size: 2rem; margin-bottom: 10px;">💾</div>
+            <h4 style="color: #495057; margin: 0 0 8px 0;">Data Management</h4>
+            <p style="color: #6c757d; margin: 0; font-size: 14px;">Secure storage with MongoDB database</p>
+        </div>
+    </div>
+</div>
+
+<!-- Recently Added Books Section -->
+<% if (recentBooks && recentBooks.length > 0) { %>
+<div style="margin-bottom: 40px;">
+    <h2 style="text-align: center; color: #495057; margin: 0 0 30px 0;">📚 Recently Added Books</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+        <% recentBooks.forEach(book => { %>
+            <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.3s; cursor: pointer;" onclick="location.href='/books'">
+                <!-- Book Cover -->
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <% if (book.coverImageName) { %>
+                        <img src="/uploads/bookCovers/<%= book.coverImageName %>" 
+                             alt="<%= book.title %> cover" 
+                             style="max-width: 80px; max-height: 120px; object-fit: cover; border-radius: 4px; border: 1px solid #eee;">
+                    <% } else { %>
+                        <div style="width: 80px; height: 120px; background: #f8f9fa; border: 2px dashed #ddd; display: flex; align-items: center; justify-content: center; margin: 0 auto; border-radius: 4px;">
+                            <span style="color: #6c757d; font-size: 12px;">No Cover</span>
+                        </div>
+                    <% } %>
+                </div>
+                
+                <!-- Book Details -->
+                <h4 style="margin: 10px 0 5px 0; color: #333; font-size: 16px; text-align: center;">
+                    <%= book.title.length > 25 ? book.title.substring(0, 25) + '...' : book.title %>
+                </h4>
+                
+                <p style="margin: 0 0 5px 0; color: #666; text-align: center; font-size: 14px;">
+                    <strong>📝</strong> <%= book.author.name %>
+                </p>
+                
+                <p style="margin: 0 0 10px 0; color: #999; text-align: center; font-size: 12px;">
+                    <strong>🕒</strong> <%= book.createdAt.toDateString() %>
+                </p>
+                
+                <!-- Quick Action -->
+                <div style="text-align: center;">
+                    <a href="/books" style="padding: 5px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 3px; font-size: 12px;">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+    
+    <!-- View All Books Link -->
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/books" style="padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+            📖 View All Books
+        </a>
+    </div>
+</div>
+<% } %>
+
+<!-- Recent Activity -->
+<div style="text-align: center; color: #6c757d; padding: 20px;">
+    <h3 style="margin: 0 0 15px 0;">📈 Start Building Your Library Today!</h3>
+    <p style="margin: 0; font-size: 14px;">Organize, search, and manage your personal book collection with ease.</p>
+</div>

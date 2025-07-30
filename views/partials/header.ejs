@@ -1,9 +1,85 @@
-<header>
-    <nav>
-        <a href="/">Mybrary</a>
-        <ul>
-            <li><a href="/authors">Authors</a></li>
-            <li><a href="/authors/new">New Author</a></li>
-        </ul>
+<!-- Modern Navigation Header -->
+<header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px;">
+    <nav style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; min-height: 70px;">
+            <!-- Logo/Brand -->
+            <div>
+                <a href="/" style="color: white; text-decoration: none; font-size: 1.8rem; font-weight: bold; display: flex; align-items: center; gap: 10px;">
+                    📚 <span>Mybrary</span>
+                </a>
+                <small style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-left: 35px;">
+                    Your Digital Library
+                </small>
+            </div>
+            
+            <!-- Navigation Links -->
+            <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 8px; flex-wrap: wrap;">
+                <li>
+                    <a href="/authors" 
+                       style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.3s; display: flex; align-items: center; gap: 6px; font-size: 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);"
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+                       onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
+                        👥 <span>Authors</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/authors/new" 
+                       style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.3s; display: flex; align-items: center; gap: 6px; font-size: 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);"
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+                       onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
+                        ➕ <span>New Author</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/books" 
+                       style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.3s; display: flex; align-items: center; gap: 6px; font-size: 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);"
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+                       onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
+                        📖 <span>Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/books/new" 
+                       style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.3s; display: flex; align-items: center; gap: 6px; font-size: 14px; background: rgba(40, 167, 69, 0.8); border: 1px solid rgba(40, 167, 69, 0.9);"
+                       onmouseover="this.style.background='rgba(40, 167, 69, 1)'; this.style.transform='translateY(-1px)'"
+                       onmouseout="this.style.background='rgba(40, 167, 69, 0.8)'; this.style.transform='translateY(0)'">
+                        📚 <span>New Book</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </nav>
 </header>
+
+<!-- Mobile Menu Toggle (Hidden by default, for future mobile responsiveness) -->
+<style>
+@media (max-width: 768px) {
+    header nav ul {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    header nav div {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    header nav ul li a span {
+        display: none;
+    }
+    
+    header nav {
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    header nav ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%;
+    }
+}
+</style>

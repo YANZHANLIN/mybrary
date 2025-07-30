@@ -1,0 +1,127 @@
+<h2>📚 Books Library</h2>
+
+<!-- Search Form -->
+<div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+    <h3>🔍 Search Books</h3>
+    <form action="/books" method="GET">
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: end;">
+            <div>
+                <label>Search by title</label>
+                <input type="text" name="title" placeholder="Enter book title..." 
+                       value="<%= searchOptions.title || '' %>" 
+                       style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div>
+                <label>Filter by author</label>
+                <select name="author" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="">All Authors</option>
+                    <% authors.forEach(author => { %>
+                        <option value="<%= author.id %>" 
+                                <%= searchOptions.author === author.id ? 'selected' : '' %>>
+                            <%= author.name %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+            <div>
+                <label>Published after</label>
+                <input type="date" name="publishedAfter" 
+                       value="<%= searchOptions.publishedAfter || '' %>" 
+                       style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div>
+                <label>Published before</label>
+                <input type="date" name="publishedBefore" 
+                       value="<%= searchOptions.publishedBefore || '' %>" 
+                       style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div>
+                <button type="submit" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Search
+                </button>
+                <a href="/books" style="padding: 8px 16px; background: #6c757d; color: white; text-decoration: none; border-radius: 4px; margin-left: 5px;">
+                    Clear
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Add New Book Button -->
+<div style="margin-bottom: 20px;">
+    <a href="/books/new" style="padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+        ➕ Add New Book
+    </a>
+</div>
+
+<!-- Books Display -->
+<% if (books.length > 0) { %>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+        <% books.forEach(book => { %>
+            <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <!-- Book Cover -->
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <% if (book.coverImageName) { %>
+                        <img src="/uploads/bookCovers/<%= book.coverImageName %>" 
+                             alt="<%= book.title %> cover" 
+                             style="max-width: 100px; max-height: 150px; object-fit: cover; border-radius: 4px; border: 1px solid #eee;">
+                    <% } else { %>
+                        <div style="width: 100px; height: 150px; background: #f8f9fa; border: 2px dashed #ddd; display: flex; align-items: center; justify-content: center; margin: 0 auto; border-radius: 4px;">
+                            <span style="color: #6c757d;">No Cover</span>
+                        </div>
+                    <% } %>
+                </div>
+                
+                <!-- Book Details -->
+                <h4 style="margin: 10px 0; color: #333;"><%= book.title %></h4>
+                
+                <p style="margin: 5px 0; color: #666;">
+                    <strong>📝 Author:</strong> <%= book.author.name %>
+                </p>
+                
+                <% if (book.description) { %>
+                    <p style="margin: 5px 0; color: #666; font-size: 14px;">
+                        <strong>📖 Description:</strong> 
+                        <%= book.description.length > 100 ? book.description.substring(0, 100) + '...' : book.description %>
+                    </p>
+                <% } %>
+                
+                <p style="margin: 5px 0; color: #666; font-size: 14px;">
+                    <strong>📅 Published:</strong> <%= book.publishDate.toDateString() %>
+                </p>
+                
+                <p style="margin: 5px 0; color: #666; font-size: 14px;">
+                    <strong>📄 Pages:</strong> <%= book.pageCount %>
+                </p>
+                
+                <p style="margin: 5px 0; color: #999; font-size: 12px;">
+                    <strong>🕒 Added:</strong> <%= book.createdAt.toDateString() %>
+                </p>
+                
+                <!-- Action Buttons -->
+                <div style="margin-top: 15px; display: flex; gap: 5px;">
+                    <a href="/books/<%= book.id %>" style="padding: 5px 10px; background: #007bff; color: white; text-decoration: none; border-radius: 3px; font-size: 12px;">
+                        View
+                    </a>
+                    <a href="/books/<%= book.id %>/edit" style="padding: 5px 10px; background: #ffc107; color: black; text-decoration: none; border-radius: 3px; font-size: 12px;">
+                        Edit
+                    </a>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+<% } else { %>
+    <!-- No Books Message -->
+    <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 8px; color: #6c757d;">
+        <h3>📚 No Books Found</h3>
+        <p>No books match your search criteria or no books have been added yet.</p>
+        <a href="/books/new" style="padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; margin-top: 10px; display: inline-block;">
+            Add the First Book
+        </a>
+    </div>
+<% } %>
+
+<!-- Books Summary -->
+<div style="margin-top: 30px; text-align: center; color: #6c757d; border-top: 1px solid #eee; padding-top: 20px;">
+    <p>📊 Total Books: <strong><%= books.length %></strong> | Authors: <strong><%= authors.length %></strong></p>
+</div>

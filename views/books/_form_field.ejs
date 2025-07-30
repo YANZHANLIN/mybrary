@@ -1,0 +1,93 @@
+<!-- Form Fields Container -->
+<div style="display: grid; gap: 20px;">
+    <!-- Book Title -->
+    <div>
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Book Title *</label>
+        <input type="text" 
+               name="title" 
+               value="<%= book.title || '' %>" 
+               placeholder="Enter the book title"
+               required
+               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box; transition: border-color 0.3s;"
+               onfocus="this.style.borderColor='#007bff'"
+               onblur="this.style.borderColor='#ddd'">
+    </div>
+
+    <!-- Book Description -->
+    <div>
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Description</label>
+        <textarea name="description" 
+                  rows="5" 
+                  placeholder="Enter a brief description of the book..."
+                  style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box; resize: vertical; transition: border-color 0.3s; font-family: inherit;"
+                  onfocus="this.style.borderColor='#007bff'"
+                  onblur="this.style.borderColor='#ddd'"><%= book.description || '' %></textarea>
+        <small style="color: #6c757d; font-size: 14px; margin-top: 5px; display: block;">
+            📝 Optional: Add a summary or synopsis
+        </small>
+    </div>
+
+    <!-- Two Column Layout for Date and Pages -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <!-- Publish Date -->
+        <div>
+            <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Publish Date *</label>
+            <input type="date" 
+                   name="publishDate" 
+                   value="<%= book.publishDate == null ? '' : book.publishDate.toISOString().split('T')[0] %>"
+                   required
+                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box; transition: border-color 0.3s;"
+                   onfocus="this.style.borderColor='#007bff'"
+                   onblur="this.style.borderColor='#ddd'">
+        </div>
+
+        <!-- Page Count -->
+        <div>
+            <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Page Count *</label>
+            <input type="number" 
+                   name="pageCount" 
+                   min="1" 
+                   value="<%= book.pageCount || '' %>" 
+                   placeholder="e.g., 350"
+                   required
+                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box; transition: border-color 0.3s;"
+                   onfocus="this.style.borderColor='#007bff'"
+                   onblur="this.style.borderColor='#ddd'">
+        </div>
+    </div>
+
+    <!-- Author Selection -->
+    <div>
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Author *</label>
+        <select name="author" 
+                required
+                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box; background: white; transition: border-color 0.3s;"
+                onfocus="this.style.borderColor='#007bff'"
+                onblur="this.style.borderColor='#ddd'">
+            <option value="">Select an Author</option>
+            <% authors.forEach(author => { %>
+                <option value="<%= author.id %>" 
+                        <%= book.author && book.author.toString() === author.id.toString() ? 'selected' : '' %>>
+                    <%= author.name %>
+                </option>
+            <% }); %>
+        </select>
+        <small style="color: #6c757d; font-size: 14px; margin-top: 5px; display: block;">
+            👤 Don't see the author? <a href="/authors/new" style="color: #007bff;">Add a new author first</a>
+        </small>
+    </div>
+
+    <!-- Cover Image Upload -->
+    <div>
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Book Cover Image</label>
+        <div style="border: 2px dashed #ddd; border-radius: 6px; padding: 20px; text-align: center; background: #f8f9fa; transition: border-color 0.3s;">
+            <input type="file" 
+                   name="cover" 
+                   accept="image/*"
+                   style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; background: white;">
+            <small style="color: #6c757d; font-size: 14px; margin-top: 10px; display: block;">
+                📸 Upload a cover image (JPEG, PNG, or GIF) • Maximum size: 5MB
+            </small>
+        </div>
+    </div>
+</div>

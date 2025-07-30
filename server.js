@@ -17,8 +17,8 @@ const app = express();
 import ejs from "ejs";
 import expressEjsLayouts from "express-ejs-layouts";
 import bodyParser from "body-parser";
-
-
+import multer from "multer";
+const upload = multer({ dest: "uploads/" });
 
 //set everything 
 app.set("view engine", "ejs");
@@ -30,8 +30,7 @@ app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 
 //connect to the mongo database
 import mongoose from "mongoose";
-mongoose.connect(process.env.DATABASE_URL, { 
-    useNewUrlParser: true});
+mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
 db.on("error", error => console.error(error));
 db.once("open", () => console.log("Connected to Mongoose"));
@@ -39,8 +38,10 @@ db.once("open", () => console.log("Connected to Mongoose"));
 //import and use the routes
 import indexRouter from "./routes/index.js";
 import authorRouter from "./routes/authors.js";
+import bookRouter from "./routes/books.js";
 app.use("/", indexRouter);
 app.use("/authors", authorRouter);
+app.use("/books", bookRouter);
 
 
 

@@ -1,5 +1,68 @@
-<% if (locals.errorMessage !=null) { %>
-    <div class="error-message">
-        <%= locals.errorMessage %>
+<!-- Modern Error Message Display -->
+<% if (locals.errorMessage != null && locals.errorMessage.trim() !== '') { %>
+    <div style="background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); color: #721c24; padding: 15px 20px; border: 1px solid #f5c6cb; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;">
+        <!-- Error Icon -->
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.2rem; flex-shrink: 0; margin-top: 2px;">⚠️</span>
+            <div style="flex-grow: 1;">
+                <strong style="display: block; margin-bottom: 5px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Error</strong>
+                <p style="margin: 0; line-height: 1.4; font-size: 14px;"><%= locals.errorMessage %></p>
+            </div>
+        </div>
+        
+        <!-- Dismiss Button (Optional Enhancement) -->
+        <button onclick="this.parentElement.style.display='none'" 
+                style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 18px; color: #721c24; cursor: pointer; padding: 5px; border-radius: 3px; opacity: 0.7; transition: opacity 0.3s;"
+                onmouseover="this.style.opacity='1'"
+                onmouseout="this.style.opacity='0.7'"
+                title="Dismiss this message">
+            ×
+        </button>
+    </div>
+<% } %>
+
+<!-- Success Message Support (for future use) -->
+<% if (locals.successMessage != null && locals.successMessage.trim() !== '') { %>
+    <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; padding: 15px 20px; border: 1px solid #c3e6cb; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;">
+        <!-- Success Icon -->
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.2rem; flex-shrink: 0; margin-top: 2px;">✅</span>
+            <div style="flex-grow: 1;">
+                <strong style="display: block; margin-bottom: 5px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Success</strong>
+                <p style="margin: 0; line-height: 1.4; font-size: 14px;"><%= locals.successMessage %></p>
+            </div>
+        </div>
+        
+        <!-- Dismiss Button -->
+        <button onclick="this.parentElement.style.display='none'" 
+                style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 18px; color: #155724; cursor: pointer; padding: 5px; border-radius: 3px; opacity: 0.7; transition: opacity 0.3s;"
+                onmouseover="this.style.opacity='1'"
+                onmouseout="this.style.opacity='0.7'"
+                title="Dismiss this message">
+            ×
+        </button>
+    </div>
+<% } %>
+
+<!-- Info Message Support (for future use) -->
+<% if (locals.infoMessage != null && locals.infoMessage.trim() !== '') { %>
+    <div style="background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%); color: #0c5460; padding: 15px 20px; border: 1px solid #bee5eb; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;">
+        <!-- Info Icon -->
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.2rem; flex-shrink: 0; margin-top: 2px;">ℹ️</span>
+            <div style="flex-grow: 1;">
+                <strong style="display: block; margin-bottom: 5px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Information</strong>
+                <p style="margin: 0; line-height: 1.4; font-size: 14px;"><%= locals.infoMessage %></p>
+            </div>
+        </div>
+        
+        <!-- Dismiss Button -->
+        <button onclick="this.parentElement.style.display='none'" 
+                style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 18px; color: #0c5460; cursor: pointer; padding: 5px; border-radius: 3px; opacity: 0.7; transition: opacity 0.3s;"
+                onmouseover="this.style.opacity='1'"
+                onmouseout="this.style.opacity='0.7'"
+                title="Dismiss this message">
+            ×
+        </button>
     </div>
 <% } %>
