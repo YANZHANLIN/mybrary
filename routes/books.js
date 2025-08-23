@@ -9,12 +9,39 @@ import multer from "multer";
 
 const uploadPath = path.join("public", coverImageBasePath);
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
-const upload = multer({ dest: uploadPath, fileFilter: (req, file, cb) => {
-    cb(null, imageMimeTypes.includes(file.mimetype));
-} });
 
+// Ensure upload directory exists
+if (!fs.existsSync(uploadPath)) {
+    fs.mkdirSync(uploadPath, { recursive: true });
+}
 
-//All authors route
+// Configure multer for simple file uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadPath);
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, 'cover-' + uniqueSuffix + ext);
+    }
+});
+
+const upload = multer({ 
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (imageMimeTypes.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Invalid file type. Only images are allowed.'), false);
+        }
+    },
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5MB limit
+    }
+});
+
+//All books route
 router.route("/")
     .get(async (req, res) => {
         let query = Book.find();
@@ -44,24 +71,22 @@ router.route("/")
         }
     })
     .post(upload.single("cover"), async (req, res) => {
-        req.filename = req.file != null ? req.file.filename : null;
-        const book = new Book({
-            title: req.body.title,
-            description: req.body.description,
-            publishDate: new Date(req.body.publishDate),
-            pageCount: req.body.pageCount,
-            author: req.body.author,
-            coverImageName: req.filename,
-            coverImage: req.file != null ? req.file.buffer : null
-        });
         try {
+            const book = new Book({
+                title: req.body.title,
+                description: req.body.description,
+                publishDate: new Date(req.body.publishDate),
+                pageCount: req.body.pageCount,
+                author: req.body.author,
+                coverImageName: req.file ? req.file.filename : null
+            });
+
             const newBook = await book.save();
-            //res.redirect(`books/${newBook.id}`);
             res.redirect("books");
         } catch (err) {
             console.log("Book save error:", err); 
-            if (book.coverImageName != null) {
-                removeBookCover(book.coverImageName);
+            if (req.file) {
+                removeBookCover(req.file.filename);
             }
             renderNewPage(res, book, true);
         }

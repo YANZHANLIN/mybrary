@@ -4,12 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= locals.title %></title>
+    
+    <!-- FilePond CSS -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+    <link href="/css/filepond.css" rel="stylesheet">
+    
+    <!-- FilePond Scripts -->
+    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 </head>
 <body>
     <%- include("../partials/header.ejs") %>
     <%- include("../partials/errormsg.ejs") %>
     <%- body %>
     <%- include("../partials/footer.ejs") %>
+    
+    <!-- Custom FilePond JavaScript -->
+    <script src="/javascript/fileupload.js"></script>
+    
     <pre><%= JSON.stringify(locals, null, 2) %></pre>
 </body>
 </html>

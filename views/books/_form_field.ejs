@@ -80,14 +80,16 @@
     <!-- Cover Image Upload -->
     <div>
         <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Book Cover Image</label>
-        <div style="border: 2px dashed #ddd; border-radius: 6px; padding: 20px; text-align: center; background: #f8f9fa; transition: border-color 0.3s;">
+        <div class="filepond-upload-area">
             <input type="file" 
                    name="cover" 
                    accept="image/*"
-                   style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; background: white;">
-            <small style="color: #6c757d; font-size: 14px; margin-top: 10px; display: block;">
-                📸 Upload a cover image (JPEG, PNG, or GIF) • Maximum size: 5MB
-            </small>
+                   class="filepond"
+                   data-max-file-size="5MB"
+                   data-accepted-file-types="image/jpeg,image/png,image/gif">
         </div>
+        <small style="color: #6c757d; font-size: 14px; margin-top: 10px; display: block;">
+            📸 Drag & drop or click to browse • Supports JPEG, PNG, GIF • Max 5MB • Recommended: 3:4 aspect ratio
+        </small>
     </div>
 </div>

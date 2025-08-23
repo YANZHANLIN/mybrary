@@ -23,13 +23,9 @@ const bookSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
-    coverImage: {
-        type: Buffer,
-        required: false
-    },
     coverImageName: {
         type: String,
-        required: true
+        required: false  // Made optional since FilePond handles validation
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,
