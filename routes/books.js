@@ -97,6 +97,87 @@ router.route("/new")
     renderNewPage(res, new Book());
 })
 
+// Individual book routes
+router.route("/:id")
+    .get(async (req, res) => {
+        try {
+            const book = await Book.findById(req.params.id).populate('author');
+            if (!book) {
+                return res.redirect("/books");
+            }
+            res.locals.title = `Mybrary - ${book.title}`;
+            res.render("books/show", { book: book });
+        } catch (err) {
+            res.redirect("/books");
+        }
+    })
+    .put(upload.single("cover"), async (req, res) => {
+        try {
+            let book = await Book.findById(req.params.id);
+            if (!book) {
+                return res.redirect("/books");
+            }
+
+            // Update book fields
+            book.title = req.body.title;
+            book.description = req.body.description;
+            book.publishDate = new Date(req.body.publishDate);
+            book.pageCount = req.body.pageCount;
+            book.author = req.body.author;
+
+            // Update cover image if new one provided
+            if (req.file) {
+                // Remove old cover if exists
+                if (book.coverImageName) {
+                    removeBookCover(book.coverImageName);
+                }
+                book.coverImageName = req.file.filename;
+            }
+
+            await book.save();
+            res.redirect(`/books/${book._id}`);
+        } catch (err) {
+            console.log("Book update error:", err);
+            if (req.file) {
+                removeBookCover(req.file.filename);
+            }
+            res.render("books/edit", { book: book, errorMessage: "Error updating Book" });
+        }
+    })
+    .delete(async (req, res) => {
+        try {
+            const book = await Book.findById(req.params.id);
+            if (!book) {
+                return res.redirect("/books");
+            }
+            
+            // Remove cover image if exists
+            if (book.coverImageName) {
+                removeBookCover(book.coverImageName);
+            }
+            
+            await Book.findByIdAndDelete(req.params.id);
+            res.redirect("/books");
+        } catch (err) {
+            res.redirect("/books");
+        }
+    })
+
+router.route("/:id/edit")
+    .get(async (req, res) => {
+        try {
+            const book = await Book.findById(req.params.id);
+            if (!book) {
+                return res.redirect("/books");
+            }
+            const authors = await Author.find({});
+            res.locals.title = `Mybrary - Edit ${book.title}`;
+            res.render("books/edit", { book: book, authors: authors });
+        } catch (err) {
+            res.redirect("/books");
+        }
+    })
+
 function removeBookCover(filename) { 
     fs.unlink(path.join(uploadPath, filename), (err) => {
         if (err) console.error("Error deleting book cover:", err);

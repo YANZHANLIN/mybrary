@@ -21,6 +21,7 @@
     "filepond-plugin-file-encode": "^2.1.14",
     "filepond-plugin-image-preview": "^4.6.12",
     "fs": "^0.0.1-security",
+    "method-override": "^3.0.0",
     "mongodb": "^6.18.0",
     "mongoose": "^8.16.5",
     "multer": "^2.0.2"

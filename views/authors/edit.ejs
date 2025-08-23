@@ -1,0 +1,47 @@
+<div style="max-width: 600px; margin: 0 auto;">
+    <!-- Page Header -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="color: #333; margin: 0 0 10px 0;">✏️ Edit Author</h2>
+        <p style="color: #6c757d; margin: 0;">Update author information</p>
+    </div>
+
+    <!-- Error Message -->
+    <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+        <div style="background: #f8d7da; color: #721c24; padding: 15px; border: 1px solid #f5c6cb; border-radius: 6px; margin-bottom: 20px;">
+            <strong>⚠️ Error:</strong> <%= errorMessage %>
+        </div>
+    <% } %>
+
+    <!-- Form Container -->
+    <div style="background: white; border: 1px solid #e9ecef; border-radius: 10px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <form action="/authors/<%= author.id %>?_method=PUT" method="POST">
+            <!-- Author Name Field -->
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Author Name *</label>
+                <input type="text" 
+                       name="name" 
+                       value="<%= author.name %>" 
+                       placeholder="Enter author name"
+                       required
+                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box; transition: border-color 0.3s;"
+                       onfocus="this.style.borderColor='#007bff'"
+                       onblur="this.style.borderColor='#ddd'">
+            </div>
+            
+            <!-- Form Actions -->
+            <div style="display: flex; gap: 10px; justify-content: space-between; margin-top: 25px; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                <a href="/authors/<%= author.id %>" style="padding: 12px 24px; background: #6c757d; color: white; text-decoration: none; border-radius: 6px; border: none; font-size: 14px; cursor: pointer; transition: background-color 0.3s;">
+                    ❌ Cancel
+                </a>
+                <button type="submit" style="padding: 12px 24px; background: #007bff; color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: bold; transition: background-color 0.3s;">
+                    ✅ Update Author
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Help Text -->
+    <div style="text-align: center; margin-top: 20px; color: #6c757d; font-size: 14px;">
+        <p>💡 <strong>Note:</strong> Changes will be applied immediately after submission</p>
+    </div>
+</div>

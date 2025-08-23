@@ -1,0 +1,89 @@
+<div style="max-width: 900px; margin: 0 auto;">
+    <!-- Page Header -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="color: #333; margin: 0 0 10px 0;">📚 Book Details</h2>
+        <p style="color: #6c757d; margin: 0;">View and manage book information</p>
+    </div>
+
+    <!-- Book Information Card -->
+    <div style="background: white; border: 1px solid #e9ecef; border-radius: 10px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: start;">
+            <!-- Book Cover -->
+            <div style="text-align: center;">
+                <% if (book.coverImageName) { %>
+                    <img src="/uploads/bookCovers/<%= book.coverImageName %>" 
+                         alt="<%= book.title %> cover" 
+                         style="max-width: 250px; max-height: 350px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <% } else { %>
+                    <div style="width: 250px; height: 350px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border: 2px dashed #dee2e6; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #6c757d;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">📚</div>
+                            <div>No Cover Image</div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Book Details -->
+            <div>
+                <h1 style="color: #333; margin: 0 0 15px 0; font-size: 28px;"><%= book.title %></h1>
+                
+                <div style="margin-bottom: 20px;">
+                    <p style="margin: 8px 0; color: #666; font-size: 16px;">
+                        <strong>✍️ Author:</strong> 
+                        <a href="/authors/<%= book.author._id %>" style="color: #007bff; text-decoration: none;">
+                            <%= book.author.name %>
+                        </a>
+                    </p>
+                    
+                    <% if (book.description) { %>
+                        <p style="margin: 8px 0; color: #495057; line-height: 1.6;">
+                            <strong>📝 Description:</strong><br>
+                            <%= book.description %>
+                        </p>
+                    <% } %>
+                    
+                    <p style="margin: 8px 0; color: #666; font-size: 16px;">
+                        <strong>📅 Published:</strong> <%= book.publishDate ? new Date(book.publishDate).toLocaleDateString() : 'N/A' %>
+                    </p>
+                    
+                    <p style="margin: 8px 0; color: #666; font-size: 16px;">
+                        <strong>📖 Pages:</strong> <%= book.pageCount %>
+                    </p>
+                    
+                    <p style="margin: 8px 0; color: #666; font-size: 16px;">
+                        <strong>📚 Added to Library:</strong> <%= book.createdAt ? new Date(book.createdAt).toLocaleDateString() : 'N/A' %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display: flex; gap: 15px; justify-content: center; margin-bottom: 20px;">
+        <a href="/books/<%= book._id %>/edit" style="padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px; border: none; font-size: 14px; cursor: pointer; transition: background-color 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+            ✏️ Edit Book
+        </a>
+        
+        <!-- Delete Button -->
+        <form action="/books/<%= book._id %>?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" 
+                    onclick="return confirm('Are you sure you want to delete <%= book.title %>? This action cannot be undone.')"
+                    style="padding: 12px 24px; background: #dc3545; color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; transition: background-color 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+                🗑️ Delete Book
+            </button>
+        </form>
+    </div>
+
+    <!-- Navigation -->
+    <div style="text-align: center;">
+        <a href="/books" style="padding: 10px 20px; background: #6c757d; color: white; text-decoration: none; border-radius: 6px; border: none; font-size: 14px; cursor: pointer; transition: background-color 0.3s;">
+            ← Back to Books
+        </a>
+    </div>
+
+    <!-- Help Text -->
+    <div style="text-align: center; margin-top: 20px; color: #6c757d; font-size: 14px;">
+        <p>💡 <strong>Tip:</strong> You can edit book details, update the cover image, or remove the book from your library</p>
+    </div>
+</div>

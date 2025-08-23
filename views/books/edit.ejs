@@ -1,0 +1,83 @@
+<div style="max-width: 800px; margin: 0 auto;">
+    <!-- Page Header -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="color: #333; margin: 0 0 10px 0;">✏️ Edit Book</h2>
+        <p style="color: #6c757d; margin: 0;">Update book information and cover image</p>
+    </div>
+
+    <!-- Error Message -->
+    <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+        <div style="background: #f8d7da; color: #721c24; padding: 15px; border: 1px solid #f5c6cb; border-radius: 6px; margin-bottom: 20px;">
+            <strong>⚠️ Error:</strong> <%= errorMessage %>
+        </div>
+    <% } %>
+
+    <!-- Form Container -->
+    <div style="background: white; border: 1px solid #e9ecef; border-radius: 10px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <form action="/books/<%= book._id %>?_method=PUT" method="POST" enctype="multipart/form-data" id="bookEditForm">
+            <!-- Include Form Fields -->
+            <%- include('_form_field') %>
+            
+            <!-- Form Actions -->
+            <div style="display: flex; gap: 10px; justify-content: space-between; margin-top: 25px; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                <a href="/books/<%= book._id %>" style="padding: 12px 24px; background: #6c757d; color: white; text-decoration: none; border-radius: 6px; border: none; font-size: 14px; cursor: pointer; transition: background-color 0.3s;">
+                    ❌ Cancel
+                </a>
+                <button type="submit" style="padding: 12px 24px; background: #007bff; color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: bold; transition: background-color 0.3s;">
+                    ✅ Update Book
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Help Text -->
+    <div style="text-align: center; margin-top: 20px; color: #6c757d; font-size: 14px;">
+        <p>💡 <strong>Tips:</strong> You can update any field including the cover image • Leave cover image empty to keep the current one</p>
+    </div>
+</div>
+
+<script>
+// Handle form submission with FilePond data
+document.getElementById('bookEditForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get FilePond file data
+    const fileInput = document.querySelector('input.filepond');
+    if (fileInput && fileInput.fileData) {
+        // Create a new FormData object
+        const formData = new FormData(this);
+        
+        // Remove the original file input
+        formData.delete('cover');
+        
+        // Add the FilePond file
+        const file = fileInput.fileData.getFile();
+        formData.append('cover', file);
+        
+        // Submit the form with the file
+        fetch(this.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                return response.text();
+            }
+        })
+        .then(html => {
+            if (html) {
+                document.body.innerHTML = html;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error updating book. Please try again.');
+        });
+    } else {
+        // No new file selected, submit normally
+        this.submit();
+    }
+});
+</script>

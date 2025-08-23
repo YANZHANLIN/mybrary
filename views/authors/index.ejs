@@ -52,7 +52,7 @@
                 </p>
                 
                 <!-- Action Buttons -->
-                <div style="margin-top: 15px; display: flex; gap: 8px; justify-content: center;">
+                <div style="margin-top: 15px; display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;">
                     <a href="/authors/<%= author._id %>/books" style="padding: 6px 12px; background: #007bff; color: white; text-decoration: none; border-radius: 3px; font-size: 12px;">
                         📖 Books
                     </a>
@@ -62,6 +62,14 @@
                     <a href="/authors/<%= author._id %>" style="padding: 6px 12px; background: #17a2b8; color: white; text-decoration: none; border-radius: 3px; font-size: 12px;">
                         👁️ View
                     </a>
+                    <!-- Delete Button -->
+                    <button type="button" 
+                            onclick="confirmDelete('<%= author._id %>', '<%= author.name %>')"
+                            style="padding: 6px 12px; background: #dc3545; color: white; border: none; border-radius: 3px; font-size: 12px; cursor: pointer; transition: background-color 0.3s;"
+                            onmouseover="this.style.backgroundColor='#c82333'"
+                            onmouseout="this.style.backgroundColor='#dc3545'">
+                        🗑️ Delete
+                    </button>
                 </div>
             </div>
         <% }); %>
@@ -89,7 +97,27 @@
     <p>📊 Total Authors: <strong><%= authors.length %></strong></p>
 </div>
 
-<!-- JavaScript for Book Count -->
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+    <div style="background-color: white; margin: 15% auto; padding: 30px; border-radius: 10px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+        <h3 style="color: #dc3545; margin-bottom: 20px;">⚠️ Confirm Deletion</h3>
+        <p style="margin-bottom: 25px; color: #333;">Are you sure you want to delete <strong id="authorNameToDelete"></strong>?</p>
+        <p style="margin-bottom: 25px; color: #dc3545; font-size: 14px;">This action cannot be undone!</p>
+        
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button onclick="closeDeleteModal()" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;">
+                ❌ Cancel
+            </button>
+            <form id="deleteForm" method="POST" style="display: inline;">
+                <button type="submit" style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold;">
+                    🗑️ Delete Author
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Book Count and Delete Modal -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Set default book count to 0 for all authors
@@ -98,4 +126,23 @@ document.addEventListener('DOMContentLoaded', function() {
         element.textContent = '0';
     });
 });
+
+// Delete confirmation functions
+function confirmDelete(authorId, authorName) {
+    document.getElementById('authorNameToDelete').textContent = authorName;
+    document.getElementById('deleteForm').action = `/authors/${authorId}?_method=DELETE`;
+    document.getElementById('deleteModal').style.display = 'block';
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('deleteModal');
+    if (event.target === modal) {
+        closeDeleteModal();
+    }
+}
 </script>
