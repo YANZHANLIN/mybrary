@@ -1,0 +1,117 @@
+<!-- Author Books Page -->
+<div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+    
+    <!-- Header Section -->
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 20px; text-align: center; border-radius: 12px; margin-bottom: 30px;">
+        <h1 style="font-size: 2.5rem; margin: 0 0 15px 0; font-weight: bold;">
+            📚 Books by <%= author.name %>
+        </h1>
+        <p style="font-size: 1.1rem; margin: 0; opacity: 0.9;">
+            Total Books: <%= totalBooks %> | Page <%= currentPage %> of <%= totalPages %>
+        </p>
+        <div style="margin-top: 20px;">
+            <a href="/authors/<%= author._id %>" style="padding: 10px 20px; background: rgba(255,255,255,0.2); color: white; text-decoration: none; border-radius: 6px; font-weight: bold; border: 2px solid rgba(255,255,255,0.3); transition: all 0.3s;">
+                ← Back to Author
+            </a>
+        </div>
+    </div>
+
+    <!-- Books Grid -->
+    <% if (books && books.length > 0) { %>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px;">
+            <% books.forEach(book => { %>
+                <div style="background: white; border: 1px solid #e9ecef; border-radius: 10px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s; cursor: pointer;" onclick="location.href='/books/<%= book._id %>'">
+                    
+                    <!-- Book Cover -->
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <% if (book.coverImageName) { %>
+                            <img src="/uploads/bookCovers/<%= book.coverImageName %>" 
+                                 alt="<%= book.title %> cover" 
+                                 style="max-width: 120px; max-height: 160px; object-fit: cover; border-radius: 8px; border: 2px solid #eee; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        <% } else { %>
+                            <div style="width: 120px; height: 160px; background: linear-gradient(45deg, #f0f0f0, #e0e0e0); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto; border: 2px solid #ddd;">
+                                <span style="font-size: 3rem; color: #999;">📚</span>
+                            </div>
+                        <% } %>
+                    </div>
+                    
+                    <!-- Book Details -->
+                    <h3 style="margin: 10px 0 8px 0; color: #333; font-size: 18px; text-align: center; line-height: 1.3;">
+                        <%= book.title %>
+                    </h3>
+                    
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <% if (book.description && book.description.length > 0) { %>
+                            <p style="color: #666; font-size: 14px; line-height: 1.4; margin: 0 0 10px 0;">
+                                <%= book.description.length > 100 ? book.description.substring(0, 100) + '...' : book.description %>
+                            </p>
+                        <% } %>
+                        
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #888;">
+                            <span><strong>📅</strong> <%= new Date(book.publishDate).toLocaleDateString() %></span>
+                            <span><strong>📄</strong> <%= book.pageCount %> pages</span>
+                        </div>
+                        
+                        <div style="font-size: 12px; color: #888; margin-top: 8px;">
+                            <strong>🕒</strong> Added <%= new Date(book.createdAt).toLocaleDateString() %>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div style="display: flex; gap: 10px; justify-content: center;">
+                        <a href="/books/<%= book._id %>" style="padding: 8px 16px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: bold; transition: background 0.3s;">
+                            View Details
+                        </a>
+                        <a href="/books/<%= book._id %>/edit" style="padding: 8px 16px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: bold; transition: background 0.3s;">
+                            Edit
+                        </a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+        
+        <!-- Pagination -->
+        <% if (totalPages > 1) { %>
+            <div style="text-align: center; margin: 40px 0;">
+                <div style="display: inline-flex; gap: 10px; align-items: center; background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    
+                    <% if (hasPrevPage) { %>
+                        <a href="/authors/<%= author._id %>/books?page=<%= currentPage - 1 %>" style="padding: 8px 16px; background: #6c757d; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+                            ← Previous
+                        </a>
+                    <% } %>
+                    
+                    <span style="color: #495057; font-weight: bold;">
+                        Page <%= currentPage %> of <%= totalPages %>
+                    </span>
+                    
+                    <% if (hasNextPage) { %>
+                        <a href="/authors/<%= author._id %>/books?page=<%= currentPage + 1 %>" style="padding: 8px 16px; background: #6c757d; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+                            Next →
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
+        
+    <% } else { %>
+        <!-- No Books Message -->
+        <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 10px; border: 2px dashed #dee2e6;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">📚</div>
+            <h3 style="color: #6c757d; margin: 0 0 15px 0;">No Books Yet</h3>
+            <p style="color: #999; margin: 0 0 25px 0; font-size: 16px;">
+                <%= author.name %> hasn't published any books yet.
+            </p>
+            <a href="/books/new" style="padding: 12px 24px; background: #28a745; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">
+                ➕ Add First Book
+            </a>
+        </div>
+    <% } %>
+    
+    <!-- Back to Authors Link -->
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="/authors" style="padding: 12px 24px; background: #6c757d; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; transition: background 0.3s;">
+            ← Back to All Authors
+        </a>
+    </div>
+</div>

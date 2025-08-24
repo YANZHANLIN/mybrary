@@ -44,7 +44,7 @@
                 <h3 style="margin: 10px 0; color: #333; font-size: 1.2rem;"><%= author.name %></h3>
                 
                 <p style="margin: 5px 0; color: #666; font-size: 14px;">
-                    <strong>📚 Books:</strong> <span id="book-count-<%= author._id %>">Loading...</span>
+                    <strong>📚 Books:</strong> <span id="book-count-<%= author._id %>"><%= author.bookCount || 0 %></span>
                 </p>
                 
                 <p style="margin: 5px 0; color: #999; font-size: 12px;">
@@ -95,6 +95,7 @@
 <!-- Authors Summary -->
 <div style="margin-top: 30px; text-align: center; color: #6c757d; border-top: 1px solid #eee; padding-top: 20px;">
     <p>📊 Total Authors: <strong><%= authors.length %></strong></p>
+    <p>📚 Total Books: <strong><%= authors.reduce((total, author) => total + (author.bookCount || 0), 0) %></strong></p>
 </div>
 
 <!-- Delete Confirmation Modal -->
@@ -120,11 +121,8 @@
 <!-- JavaScript for Book Count and Delete Modal -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Set default book count to 0 for all authors
-    const bookCountElements = document.querySelectorAll('[id^="book-count-"]');
-    bookCountElements.forEach(element => {
-        element.textContent = '0';
-    });
+    // Book counts are now loaded from the server
+    // No need to set default values
 });
 
 // Delete confirmation functions

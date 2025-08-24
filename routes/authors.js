@@ -13,7 +13,30 @@ router.route("/")
         try {
             res.locals.title = "Mybrary authors page"; 
             const authors = await Author.find(searchOptions);
-            res.render("authors/index", {authors: authors, searchOptions: req.query});
+            
+            // Only query book counts if there are authors
+            let authorsWithBookCounts = [];
+            if (authors.length > 0) {
+                authorsWithBookCounts = await Promise.all(
+                    authors.map(async (author) => {
+                        try {
+                            const bookCount = await Book.countDocuments({ author: author._id });
+                            return {
+                                ...author.toObject(),
+                                bookCount: bookCount
+                            };
+                        } catch (err) {
+                            console.log(`Error counting books for author ${author._id}:`, err);
+                            return {
+                                ...author.toObject(),
+                                bookCount: 0
+                            };
+                        }
+                    })
+                );
+            }
+            
+            res.render("authors/index", {authors: authorsWithBookCounts, searchOptions: req.query});
         } catch (err) {
             res.redirect("/");
         }
@@ -36,6 +59,44 @@ router.route("/new")
     res.locals.title = "Mybrary new authors page";
     res.render("authors/new", {author: new Author()});
 })
+
+// Route to display all books by a specific author (MUST come before /:id)
+router.route("/:id/books")
+    .get(async (req, res) => {
+        try {
+            const author = await Author.findById(req.params.id);
+            if (!author) {
+                return res.redirect("/authors");
+            }
+            
+            // Get all books by this author with pagination
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 12; // 12 books per page for grid layout
+            const skip = (page - 1) * limit;
+            
+            const books = await Book.find({ author: author._id })
+                .sort({ createdAt: 'desc' })
+                .skip(skip)
+                .limit(limit);
+            
+            const totalBooks = await Book.countDocuments({ author: author._id });
+            const totalPages = Math.ceil(totalBooks / limit);
+            
+            res.locals.title = `Mybrary - Books by ${author.name}`;
+            res.render("authors/books", { 
+                author: author, 
+                books: books, 
+                currentPage: page,
+                totalPages: totalPages,
+                totalBooks: totalBooks,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1
+            });
+        } catch (err) {
+            console.log("Error fetching author books:", err);
+            res.redirect("/authors");
+        }
+    })
 
 router.route("/:id")
     .get(async (req, res) => {
